@@ -35,18 +35,15 @@ public class Pointer : MonoBehaviour
                     if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == _tileInfo.TileColor)
                     {
                         hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = basicsColor;
-                        tile.PlayerColorAlpha = 1f;
                         tile.PlayerSpeed = 1f;
-                        tile.CanPass = true;
                         tile.IsSelect = false;
                         return;
                     }
                     else
                     {
                         hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = _tileInfo.TileColor;
-                        tile.PlayerColorAlpha = _tileInfo.PlayerColorAlpha;
                         tile.PlayerSpeed = _tileInfo.PlayerSpeed;
-                        tile.CanPass = _tileInfo.CanPass;
+                        tile.IsSelect = true;
                         return;
                     }
                 }
@@ -85,9 +82,7 @@ public class Pointer : MonoBehaviour
             {
                 meshRenderer.material.color = _tileInfo.TileColor;
                 tile.IsSelect = true;
-                tile.PlayerColorAlpha = _tileInfo.PlayerColorAlpha;
                 tile.PlayerSpeed = _tileInfo.PlayerSpeed;
-                tile.CanPass = _tileInfo.CanPass;
             }
 
 

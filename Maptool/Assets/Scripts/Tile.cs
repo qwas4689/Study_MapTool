@@ -17,15 +17,10 @@ public class Tile : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private Collider _collider;
 
-    private float _playerColorAlpha;
-    public float PlayerColorAlpha { get { return _playerColorAlpha; } set { _playerColorAlpha = value; } }
-
     private float _playerSpeed;
     public float PlayerSpeed { get { return _playerSpeed; } set { _playerSpeed = value; } }
 
-    private bool _canPass;
-    public bool CanPass { get { return _canPass; } set { _canPass = value; } }
-
+    private bool _isStart;
 
     public Action Click;
     public Action ResetClick;
@@ -37,19 +32,24 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        if (!_isSelect && Input.GetKeyDown(KeyCode.P))
+        if (!_isStart)
         {
-            _meshRenderer = GetComponent<MeshRenderer>();
-
-            if (_meshRenderer.material.color == basicsColor || _meshRenderer.material.color == _whiteHalf || _meshRenderer.material.color == _greenHalf || _meshRenderer.material.color == _blueHalf || _meshRenderer.material.color == _blackHalf)
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                _meshRenderer.material.color = Color.white;
+                _meshRenderer = GetComponent<MeshRenderer>();
+
+                if (_meshRenderer.material.color == basicsColor || _meshRenderer.material.color == _whiteHalf || _meshRenderer.material.color == _greenHalf || _meshRenderer.material.color == _blueHalf || _meshRenderer.material.color == _blackHalf)
+                {
+                    _meshRenderer.material.color = Color.white;
+                    _collider.isTrigger = true;
+                }
+                if (_meshRenderer.material.color == Color.black)
+                {
+                    _collider.isTrigger = false;
+                }
+                _isStart = true;
             }
         }
 
-        if (!_canPass)
-        {
-            _collider.isTrigger = false;
-        }
     }
 }

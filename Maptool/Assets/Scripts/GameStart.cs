@@ -19,6 +19,8 @@ public class GameStart : MonoBehaviour
     [SerializeField] private GameObject _field;
     [SerializeField] private GameObject _player;
 
+    private bool _isStart;
+
     private void Start()
     {
         _ground.Add(_field);
@@ -26,7 +28,7 @@ public class GameStart : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && !_isStart)
         {
             for (int i = 0; i < _ground.Count; ++i)
             {
@@ -34,6 +36,13 @@ public class GameStart : MonoBehaviour
             }
 
             Instantiate(_player);
+
+            _isStart = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
 
         // 옆의 확장버튼을 누르면 리스트에 추가하면서 인스턴시에이트 해 준다

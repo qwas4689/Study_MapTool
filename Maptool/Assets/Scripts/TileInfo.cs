@@ -34,16 +34,12 @@ public class TileInfo : MonoBehaviour
     private float _playerSpeed;
     public float PlayerSpeed { get { return _playerSpeed; } private set { _playerSpeed = value; } }
 
-    private bool _canPass;
-    public bool CanPass { get { return _canPass; } private set { _canPass = value; } }
-
     private void Awake()
     {
         _tileColor = Color.white;
         _tileColorHalf = _whiteHalf;
         _playerColorAlpha = NORMAL;
         _playerSpeed = NORMAL;
-        _canPass = true;
     }
 
     private void Update()
@@ -54,7 +50,6 @@ public class TileInfo : MonoBehaviour
             _tileColorHalf = _whiteHalf;
             _playerColorAlpha = NORMAL;
             _playerSpeed = NORMAL;
-            _canPass = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -62,7 +57,6 @@ public class TileInfo : MonoBehaviour
             _tileColorHalf = _greenHalf;
             _playerColorAlpha = HALF;
             _playerSpeed = NORMAL;
-            _canPass = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -70,7 +64,6 @@ public class TileInfo : MonoBehaviour
             _tileColorHalf = _blueHalf;
             _playerColorAlpha = NORMAL;
             _playerSpeed = HALF;
-            _canPass = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
@@ -78,7 +71,6 @@ public class TileInfo : MonoBehaviour
             _tileColorHalf = _blackHalf;
             _playerColorAlpha = NORMAL;
             _playerSpeed = NORMAL;
-            _canPass = false;
         }
     }
 }

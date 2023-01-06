@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pointer : MonoBehaviour
 {
     [SerializeField] private TileInfo _tileInfo;
-    private Collider[] collider = new Collider[2];
+    private Collider[] colliders = new Collider[2];
     private Color basicsColor = new Color(1f, 1f, 1f, 0f);
 
     private bool _isStart;
@@ -48,30 +48,34 @@ public class Pointer : MonoBehaviour
                     }
                 }
 
-                collider[1] = hit.collider;
-                if (!collider[0].GetComponent<Tile>().IsSelect)
+                if (colliders[0] != null)
                 {
-                    collider[0].GetComponent<MeshRenderer>().material.color = basicsColor;
-                }
-                collider[0] = collider[1];
-                collider[1] = null;
+                    colliders[1] = hit.collider;
+                    if (!colliders[0].GetComponent<Tile>().IsSelect)
+                    {
+                        colliders[0].GetComponent<MeshRenderer>().material.color = basicsColor;
+                    }
+                    colliders[0] = colliders[1];
+                    colliders[1] = null;
 
-                return;
+                    return;
+                }
+                
             }
 
-            if (collider[0] == null)
+            if (colliders[0] == null && !hit.collider.gameObject.GetComponent<Tile>().IsSelect)
             {
-                collider[0] = hit.collider;
+                colliders[0] = hit.collider;
             }
             else
             {
-                collider[1] = hit.collider;
-                if (!collider[0].GetComponent<Tile>().IsSelect)
+                colliders[1] = hit.collider;
+                if (!colliders[0].GetComponent<Tile>().IsSelect)
                 {
-                    collider[0].GetComponent<MeshRenderer>().material.color = basicsColor;
+                    colliders[0].GetComponent<MeshRenderer>().material.color = basicsColor;   
                 }
-                collider[0] = collider[1];
-                collider[1] = null;
+                colliders[0] = colliders[1];
+                colliders[1] = null;
             }
 
             MeshRenderer meshRenderer = hit.collider.gameObject.GetComponent<MeshRenderer>();

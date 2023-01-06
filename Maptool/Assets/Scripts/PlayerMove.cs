@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
             _moveSpeed = other.gameObject.GetComponent<Tile>().PlayerSpeed;
         }
 
-        else
+        else if (other.gameObject.GetComponent<MeshRenderer>().material.color == Color.white)
         {
             _meshRenderer.material.color = Color.red;
             _moveSpeed = _defaultMoveSpeed;

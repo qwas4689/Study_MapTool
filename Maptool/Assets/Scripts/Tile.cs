@@ -22,11 +22,11 @@ public class Tile : MonoBehaviour
 
     private string _tileName;
 
-    private const string _dataPath = "Assets/Data";
+    private const string _dataPath = "Assets/Resources";
     private StreamWriter _streamWriter;
     private StreamReader _streamReader;
 
-    private DirectoryInfo _directoryInfo = new DirectoryInfo("Assets/Data");
+    private DirectoryInfo _directoryInfo = new DirectoryInfo("Assets/Resources");
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;

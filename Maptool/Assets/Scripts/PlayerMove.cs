@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.GetComponent<Tile>().PlayerSpeed);
         if (other.gameObject.GetComponent<MeshRenderer>().material.color == Color.green)
         {
             _meshRenderer.material.color = _redHalf;
@@ -40,8 +41,12 @@ public class PlayerMove : MonoBehaviour
 
         else if (other.gameObject.GetComponent<MeshRenderer>().material.color == Color.blue)
         {
+            if (_moveSpeed != _defaultMoveSpeed)
+            {
+                return;
+            }
             _meshRenderer.material.color = Color.red;
-            _moveSpeed = other.gameObject.GetComponent<Tile>().PlayerSpeed;
+            _moveSpeed *= other.gameObject.GetComponent<Tile>().PlayerSpeed;
         }
 
         else if (other.gameObject.GetComponent<MeshRenderer>().material.color == Color.white)

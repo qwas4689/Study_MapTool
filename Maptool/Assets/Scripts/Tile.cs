@@ -22,14 +22,11 @@ public class Tile : MonoBehaviour
 
     private string _tileName;
 
-
     private string _dataPath;
     private DirectoryInfo _directoryInfo;
 
     private StreamWriter _streamWriter;
     private StreamReader _streamReader;
-
-
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
@@ -74,6 +71,11 @@ public class Tile : MonoBehaviour
 
                 SaveTileColor();
 
+                if (_playerSpeed == 0)
+                {
+                    _playerSpeed = 1f;
+                }
+
                 _isStart = true;
             }
         }
@@ -115,6 +117,7 @@ public class Tile : MonoBehaviour
             _streamWriter.WriteLine(_tileColorG);
             _streamWriter.WriteLine(_tileColorB);
             _streamWriter.WriteLine(_tileColorA);
+            _streamWriter.WriteLine(_playerSpeed);
 
             _streamWriter.Close();
         }
@@ -126,6 +129,7 @@ public class Tile : MonoBehaviour
             _streamWriter.WriteLine(_tileColorG);
             _streamWriter.WriteLine(_tileColorB);
             _streamWriter.WriteLine(_tileColorA);
+            _streamWriter.WriteLine(_playerSpeed);
 
             _streamWriter.Close();
         }
@@ -139,6 +143,7 @@ public class Tile : MonoBehaviour
         _tileColorG = float.Parse(_streamReader.ReadLine());
         _tileColorB = float.Parse(_streamReader.ReadLine());
         _tileColorA = float.Parse(_streamReader.ReadLine());
+        _playerSpeed = float.Parse(_streamReader.ReadLine());
 
         _streamReader.Close();
 

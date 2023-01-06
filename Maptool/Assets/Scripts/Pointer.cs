@@ -88,8 +88,6 @@ public class Pointer : MonoBehaviour
                 tile.IsSelect = true;
                 tile.PlayerSpeed = _tileInfo.PlayerSpeed;
             }
-
-
         }
     }
 }

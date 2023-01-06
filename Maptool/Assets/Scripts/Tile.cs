@@ -22,11 +22,14 @@ public class Tile : MonoBehaviour
 
     private string _tileName;
 
-    private const string _dataPath = "Assets/Resources";
+
+    private string _dataPath;
+    private DirectoryInfo _directoryInfo;
+
     private StreamWriter _streamWriter;
     private StreamReader _streamReader;
 
-    private DirectoryInfo _directoryInfo = new DirectoryInfo("Assets/Resources");
+
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
@@ -38,6 +41,12 @@ public class Tile : MonoBehaviour
 
     public Action Click;
     public Action ResetClick;
+
+    private void Awake()
+    {
+        _dataPath = Application.dataPath;
+        _directoryInfo = new DirectoryInfo(_dataPath);
+    }
 
     private void Start()
     {
@@ -121,7 +130,7 @@ public class Tile : MonoBehaviour
             _streamWriter.Close();
         }
     }
-    
+
     private void LoadMap()
     {
         _streamReader = new StreamReader(_dataPath + "/" + _tileName);

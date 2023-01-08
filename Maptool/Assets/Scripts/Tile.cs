@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Linq;
 
 public class Tile : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Tile : MonoBehaviour
     private float _tileColorA;
 
     private string _tileName;
+    private string _groupName;
+    private const string _newline = "----------------------";
 
     private string _dataPath;
     private DirectoryInfo _directoryInfo;
@@ -101,54 +104,48 @@ public class Tile : MonoBehaviour
 
     private void SaveTileName()
     {
-        _tileName = transform.parent.gameObject.name + " " + gameObject.name;
+        _groupName = transform.parent.gameObject.name;
+        _tileName = gameObject.name;
     }
 
     private void SaveMap()
     {
-        if (File.Exists(_dataPath) == false)
-        {
-            var file = File.CreateText(_dataPath + ".txt");
-            file.Close();
+        _streamWriter = new StreamWriter(_dataPath + "/" + _groupName + ".txt", true);
 
-            _streamWriter = new StreamWriter(_dataPath + "/" + _tileName);
+        _streamWriter.WriteLine(_tileName);
+        _streamWriter.WriteLine(_tileColorR);
+        _streamWriter.WriteLine(_tileColorG);
+        _streamWriter.WriteLine(_tileColorB);
+        _streamWriter.WriteLine(_tileColorA);
+        _streamWriter.WriteLine(_playerSpeed);
+        _streamWriter.WriteLine(_newline);
 
-            _streamWriter.WriteLine(_tileColorR);
-            _streamWriter.WriteLine(_tileColorG);
-            _streamWriter.WriteLine(_tileColorB);
-            _streamWriter.WriteLine(_tileColorA);
-            _streamWriter.WriteLine(_playerSpeed);
-
-            _streamWriter.Close();
-        }
-        else
-        {
-            _streamWriter = new StreamWriter(_dataPath + "/" + _tileName);
-
-            _streamWriter.WriteLine(_tileColorR);
-            _streamWriter.WriteLine(_tileColorG);
-            _streamWriter.WriteLine(_tileColorB);
-            _streamWriter.WriteLine(_tileColorA);
-            _streamWriter.WriteLine(_playerSpeed);
-
-            _streamWriter.Close();
-        }
+        _streamWriter.Close();
     }
 
     private void LoadMap()
     {
-        _streamReader = new StreamReader(_dataPath + "/" + _tileName);
+        _streamReader = new StreamReader(_dataPath + "/" + _groupName + ".txt");
 
-        _tileColorR = float.Parse(_streamReader.ReadLine());
-        _tileColorG = float.Parse(_streamReader.ReadLine());
-        _tileColorB = float.Parse(_streamReader.ReadLine());
-        _tileColorA = float.Parse(_streamReader.ReadLine());
-        _playerSpeed = float.Parse(_streamReader.ReadLine());
+        while(true)
+        { 
+            if (_tileName == _streamReader.ReadLine())
+            {
+                _tileColorR = float.Parse(_streamReader.ReadLine());
+                _tileColorG = float.Parse(_streamReader.ReadLine());
+                _tileColorB = float.Parse(_streamReader.ReadLine());
+                _tileColorA = float.Parse(_streamReader.ReadLine());
+                _playerSpeed = float.Parse(_streamReader.ReadLine());
+                _streamReader.ReadLine();
 
-        _streamReader.Close();
+                _streamReader.Close();
 
-        _meshRenderer.material.color = new Color(_tileColorR, _tileColorG, _tileColorB, _tileColorA);
+                _meshRenderer.material.color = new Color(_tileColorR, _tileColorG, _tileColorB, _tileColorA);
 
-        _isSelect = true;
+                _isSelect = true;
+
+                break;
+            }
+        }
     }
 }
